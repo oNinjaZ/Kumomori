@@ -11,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
     {
         options.UseSqlite(builder.Configuration.GetValue<string>("Database:ConnectionString"));
     });
+
+    builder.Services.AddCors();
 }
 
 var app = builder.Build();
@@ -21,6 +23,12 @@ var app = builder.Build();
 
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(opts =>
+    {
+        opts.AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins("http://localhost:3000");
+    });
 
     using (var scope = app.Services.CreateScope())
     {
