@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Catalog from "../../features/catalog/Catalog";
 import { Book } from "../models/book";
 
 function App() {
@@ -29,11 +30,7 @@ function App() {
   return (
     <div>
       <h1>Kumomori</h1>
-      <ul>{books.map(book =>
-        <li key={book.id}>{book.title} - {book.author}</li>
-      )}
-      </ul>
-      <button onClick={addBook}>Add book</button>
+      <Catalog books={books} addBook={addBook}/>
     </div>
   );
 }
