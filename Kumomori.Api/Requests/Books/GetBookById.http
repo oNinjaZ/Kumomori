@@ -1,0 +1,4 @@
+@host=http://localhost:5000/api
+@id=4
+
+GET {{host}}/books/{{id}}
