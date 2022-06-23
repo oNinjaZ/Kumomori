@@ -1,6 +1,7 @@
 using Kumomori.Api.Data;
 using Kumomori.Api.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kumomori.Api.Controller;
 
@@ -15,16 +16,16 @@ public class BooksController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetBooks()
+    public async Task<ActionResult<List<Book>>> GetBooks()
     {
-        var books = _context.Books.ToList();
+        var books = await _context.Books.ToListAsync();
         return Ok(books);
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetBook(int id)
+    public async Task<ActionResult<Book>> GetBook(int id)
     {
-        if (_context.Books.Find(id) is not Book book)
+        if (await _context.Books.FindAsync(id) is not Book book)
             return NotFound();
 
         return Ok(book);
