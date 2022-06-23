@@ -453,3 +453,5 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 Kumomori.Api/appsettings.json
+Kumomori.Api/*.db-shm
+Kumomori.Api/*.db-wal
