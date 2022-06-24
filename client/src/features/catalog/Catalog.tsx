@@ -1,4 +1,6 @@
+import { Button } from "@mui/material";
 import { Book } from "../../app/models/book";
+import BookList from "./BookList";
 
 interface Props {
     books: Book[];
@@ -8,12 +10,8 @@ interface Props {
 export default function Catalog({books, addBook}: Props) {
     return (
         <>
-            <ul>
-                {books.map(book =>
-                    <li key={book.id}>{book.title} - {book.author}</li>
-                )}
-            </ul>
-            <button onClick={addBook}>Add book</button>
+            <BookList books={books}></BookList>
+            <Button variant='outlined' onClick={addBook}>Add book</Button>
         </>
     )
 }
