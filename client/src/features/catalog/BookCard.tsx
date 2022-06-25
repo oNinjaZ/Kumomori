@@ -6,16 +6,22 @@ interface Props {
 }
 
 export default function BookCard({ book }: Props) {
+
+  let publishDate = new Date(book.publishDate).toLocaleDateString('en-us', {year: 'numeric', month: 'numeric', day: 'numeric'})
+
   return (
     <>
       <Card>
         <CardHeader
           title={book.author}
-          subheader={book.publishDate.toString()}
+          subheader={publishDate}
+          titleTypographyProps={{
+            sx: {fontWeight: 'bold'}
+          }}
         />
         <CardMedia
+          sx={{ height: 140, backgroundSize: 'contain' }}
           component="img"
-          height="140"
           image={book.coverUrl}
         />
         <CardContent>

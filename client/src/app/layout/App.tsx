@@ -1,42 +1,33 @@
-import { Container, CssBaseline } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { useState } from "react";
 import Catalog from "../../features/catalog/Catalog";
-import { Book } from "../models/book";
 import Header from "./Header";
 
 function App() {
-  const [books, setBooks] = useState<Book[]>([]);
+  const [darkMode, setDarkMode] = useState(false);
+  const paletteType = darkMode ? 'dark' : 'light';
 
-  useEffect(() => {
-    fetch('http://localhost:5000/api/books')
-      .then(res => res.json())
-      .then(data => setBooks(data));
-  }, []);
+  const theme = createTheme({
+    palette: {
+      mode: paletteType,
+      background: {
+        default: paletteType === 'light' ? '#eaeaea' : '#121212'
+      }
+    }
+  })
 
-  function addBook() {
-    setBooks(prevState => [...prevState,
-    {
-      id: prevState.length + 1,
-      author: 'テスト著者',
-      title: '本' + (prevState.length + 1),
-      description: 'testDescription',
-      pageCount: 100,
-      price: 10.00,
-      coverUrl: 'https://via.placeholder.com/150',
-      type: 'testType',
-      quantityInStock: 10,
-      publishDate: new Date(2020, 1, 1)
-    }]);
+  function handleThemeChange() {
+    setDarkMode(!darkMode);
   }
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <CssBaseline></CssBaseline>
-      <Header></Header>
+      <Header darkMode={darkMode} handleThemeChange={handleThemeChange}></Header>
       <Container>
-        <Catalog books={books} addBook={addBook} />
+        <Catalog />
       </Container>
-    </>
+    </ThemeProvider>
   );
 }
 

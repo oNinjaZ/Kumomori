@@ -1,17 +1,20 @@
-import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Book } from "../../app/models/book";
 import BookList from "./BookList";
 
-interface Props {
-    books: Book[];
-    addBook: () => void;
-}
+export default function Catalog() {
 
-export default function Catalog({books, addBook}: Props) {
+    const [books, setBooks] = useState<Book[]>([]);
+
+    useEffect(() => {
+        fetch('http://localhost:5000/api/books')
+            .then(res => res.json())
+            .then(data => setBooks(data));
+    }, []);
+
     return (
         <>
             <BookList books={books}></BookList>
-            <Button variant='outlined' onClick={addBook}>Add book</Button>
         </>
     )
 }
