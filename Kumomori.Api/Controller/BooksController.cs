@@ -5,9 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kumomori.Api.Controller;
 
-[ApiController]
-[Route("api/[controller]")]
-public class BooksController : ControllerBase
+public class BooksController : BaseApiController
 {
     private readonly StoreContext _context;
     public BooksController(StoreContext context)
