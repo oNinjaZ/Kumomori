@@ -8,7 +8,7 @@ interface Props {
 
 export default function BookCard({ book }: Props) {
 
-  let publishDate = new Date(book.publishDate).toLocaleDateString('en-us', {year: 'numeric', month: 'numeric', day: 'numeric'})
+  const publishDate = new Date(book.publishDate).toLocaleDateString('en-us', {year: 'numeric', month: 'numeric', day: 'numeric'})
 
   return (
     <>
