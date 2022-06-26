@@ -28,6 +28,7 @@ export default function BookDetails() {
             <Grid item xs={3}>
                 <img src={book.coverUrl} alt={book.title} style={{ width: '100%' }} />
             </Grid>
+
             <Grid item xs={9}>
                 <Typography variant='h4'>{book.title}</Typography>
                 <Divider sx={{ mb: 2 }} />
@@ -62,7 +63,6 @@ export default function BookDetails() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-
             </Grid>
         </Grid>
     )
