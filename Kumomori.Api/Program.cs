@@ -1,4 +1,5 @@
 using Kumomori.Api.Data;
+using Kumomori.Api.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,18 +18,23 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 {
-    app.MapGet("/", () => "Hello World!");
+    app.UseMiddleware<ExceptionMiddleware>();
 
-    app.MapControllers();
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
 
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseRouting();
     app.UseCors(opts =>
     {
         opts.AllowAnyHeader()
             .AllowAnyMethod()
             .WithOrigins("http://localhost:3000");
     });
+
+    app.MapControllers();
 
     using (var scope = app.Services.CreateScope())
     {
