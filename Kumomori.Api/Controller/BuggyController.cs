@@ -15,8 +15,8 @@ public class BuggyController : BaseApiController
     {
         return BadRequest(new ProblemDetails
         {
-            Status = StatusCodes.Status400BadRequest,
-            Detail = "This is a bad request."
+            Title = "This is a bad request.",
+            Status = StatusCodes.Status400BadRequest
         });
     }
 
