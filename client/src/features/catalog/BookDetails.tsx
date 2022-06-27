@@ -1,7 +1,7 @@
 import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import agent from "../../app/api/agent";
 import { Book } from "../../app/models/book";
 
 export default function BookDetails() {
@@ -11,8 +11,8 @@ export default function BookDetails() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/books/${id}`)
-            .then(resp => setBook(resp.data))
+        agent.Catalog.details(parseInt(id))
+            .then(response => setBook(response))
             .catch(error => console.log(error))
             .finally(() => setLoading(false))
     }, [id])
