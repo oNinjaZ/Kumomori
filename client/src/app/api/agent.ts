@@ -12,11 +12,12 @@ interface ErrorResponse {
     errors?: {
         [key: string]: string;
     };
+    detail?: string
 }
 
 axios.interceptors.response.use(response => response,
     (error: AxiosError) => {
-        const { title, status, errors } = error.response?.data as ErrorResponse;
+        const { title, status, errors, detail } = error.response?.data as ErrorResponse;
 
         if (errors) {
             const modelStateErrors: string[] = [];
@@ -34,7 +35,10 @@ axios.interceptors.response.use(response => response,
                 toast.error(title);
                 break;
             case 500:
-                history.push('/server-error');
+                history.push({
+                    pathname: '/server-error',
+                    state: {error: detail, title: title}
+                });
                 break;
             default:
                 break;

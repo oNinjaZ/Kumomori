@@ -2,6 +2,7 @@ import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, T
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import agent from "../../app/api/agent";
+import NotFound from "../../app/errors/NotFound";
 import { Book } from "../../app/models/book";
 
 export default function BookDetails() {
@@ -19,7 +20,7 @@ export default function BookDetails() {
 
     if (loading) return <h1>Loading...</h1>
 
-    if (!book) return <h3>Not Found...</h3>
+    if (!book) return <NotFound/>
 
     const publishDate = new Date(book.publishDate).toLocaleDateString('en-us', { year: 'numeric', month: 'numeric', day: 'numeric' })
 
