@@ -42,8 +42,8 @@ function App() {
           <Route path='/about' component={AboutPage} />
           <Route path='/contact' component={ContactPage} />
           <Route path='/server-error' component={ServerError} />
-        </Switch>
           <Route component={NotFound} />
+        </Switch>
       </Container>
     </ThemeProvider>
   );
