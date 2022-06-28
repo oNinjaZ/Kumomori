@@ -2,6 +2,8 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { history } from "../..";
 
+const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000));
+
 axios.defaults.baseURL = 'http://localhost:5000/api/';
 
 const responseBody = (response: AxiosResponse) => response.data;
@@ -15,36 +17,38 @@ interface ErrorResponse {
     detail?: string
 }
 
-axios.interceptors.response.use(response => response,
-    (error: AxiosError) => {
-        const { title, status, errors, detail } = error.response?.data as ErrorResponse;
+axios.interceptors.response.use(async response => {
+    await sleep();
+    return response;
+}, (error: AxiosError) => {
+    const { title, status, errors, detail } = error.response?.data as ErrorResponse;
 
-        if (errors) {
-            const modelStateErrors: string[] = [];
-            for (const key in errors) {
-                modelStateErrors.push(errors[key]);
-            }
-            throw modelStateErrors.flat();
+    if (errors) {
+        const modelStateErrors: string[] = [];
+        for (const key in errors) {
+            modelStateErrors.push(errors[key]);
         }
+        throw modelStateErrors.flat();
+    }
 
-        switch (status) {
-            case 400:
-                toast.error(title);
-                break;
-            case 401:
-                toast.error(title);
-                break;
-            case 500:
-                history.push({
-                    pathname: '/server-error',
-                    state: {error: detail, title: title}
-                });
-                break;
-            default:
-                break;
-        }
-        return Promise.reject(error.response);
-    })
+    switch (status) {
+        case 400:
+            toast.error(title);
+            break;
+        case 401:
+            toast.error(title);
+            break;
+        case 500:
+            history.push({
+                pathname: '/server-error',
+                state: { error: detail, title: title }
+            });
+            break;
+        default:
+            break;
+    }
+    return Promise.reject(error.response);
+})
 
 const requests = {
     get: (url: string) => axios.get(url).then(responseBody),
