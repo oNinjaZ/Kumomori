@@ -61,14 +61,14 @@ public static class DbInitializer
             new Book
             {
                 Author = "綾里けいし",
-                Title = "魔導書学園の禁書少女",
-                Description = "「少年、私の伴侶になりたまえよ」世界最高峰の魔導書学園、その最底辺クラスに在籍する少年レン。世界でただ一人魔導書を持たない彼がひた隠しにする「力」に目を付けた少女アンネは、ある目的のために彼に近付く。",
-                PageCount = 247,
-                Price = (long)704m,
-                CoverUrl = "https://rimg.bookwalker.jp/9977405/BM2j7K0aiKyzud2kfkni6g__.jpg",
+                Title = "魔法科高校の劣等生",
+                Description = "　2095年9月。第一高校にある荷物が誤配される。その中身は未確認文明の魔法技術製品『聖遺物（レリック）』。人知れず自動的に起動していて――。\n　司波達也は、気がつくと森の中にいた。夢の中のような世界に困惑している達也の前に、深雪が現れる。\n　妹と無事に再会できたことに安堵する達也だが、深雪は純白のドレスを身にまとい、国王の娘になりきっていて!?\n　これは、いつもの『魔法科』ではない『魔法科高校』の物語。『魔法科』10周年を記念して、TVアニメ第1期パッケージに収録された『ドリームゲーム』を電撃文庫化！\n",
+                PageCount = 432,
+                Price = (long)803m,
+                CoverUrl = "https://rimg.bookwalker.jp/1931225/BM2j7K0aiKyzud2kfkni6g__.jpg",
                 Type = "ライトノベル",
                 QuantityInStock = 10,
-                PublishDate = new DateTime(2022, 4, 1)
+                PublishDate = new DateTime(2022, 6, 10)
             },
             new Book
             {
