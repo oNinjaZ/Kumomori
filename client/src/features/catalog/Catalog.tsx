@@ -11,7 +11,10 @@ export default function Catalog() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        agent.Catalog.list().then(books => setBooks(books))
+        agent.Catalog.list()
+        .then(books => setBooks(books))
+        .catch(error => console.log(error))
+        .finally(() => setLoading(false));
     }, []);
 
     if (loading) return <LoadingComponent message='Loading books...'/>
