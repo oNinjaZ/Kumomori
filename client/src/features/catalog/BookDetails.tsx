@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import agent from "../../app/api/agent";
 import NotFound from "../../app/errors/NotFound";
+import LoadingComponent from "../../app/layout/LoadingComponent";
 import { Book } from "../../app/models/book";
 
 export default function BookDetails() {
@@ -18,7 +19,7 @@ export default function BookDetails() {
             .finally(() => setLoading(false))
     }, [id])
 
-    if (loading) return <h1>Loading...</h1>
+    if (loading) return <LoadingComponent message='Loading book...'/>
 
     if (!book) return <NotFound/>
 
