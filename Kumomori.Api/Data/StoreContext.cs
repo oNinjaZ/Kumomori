@@ -11,4 +11,5 @@ public class StoreContext : DbContext
     }
 
     public DbSet<Book> Books { get; set; } = default!;
+    public DbSet<Basket> Basket { get; set; } = default!;
 }
