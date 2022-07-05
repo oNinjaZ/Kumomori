@@ -29,7 +29,7 @@ namespace Kumomori.Api.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Basket");
+                    b.ToTable("Baskets");
                 });
 
             modelBuilder.Entity("Kumomori.Api.Entities.BasketItem", b =>

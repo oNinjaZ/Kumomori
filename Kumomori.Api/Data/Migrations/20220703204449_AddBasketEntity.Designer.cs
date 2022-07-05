@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kumomori.Api.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20220703201925_AddBasketEntity")]
+    [Migration("20220703204449_AddBasketEntity")]
     partial class AddBasketEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace Kumomori.Api.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Basket");
+                    b.ToTable("Baskets");
                 });
 
             modelBuilder.Entity("Kumomori.Api.Entities.BasketItem", b =>

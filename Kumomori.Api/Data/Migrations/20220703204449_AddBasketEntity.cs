@@ -9,7 +9,7 @@ namespace Kumomori.Api.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Basket",
+                name: "Baskets",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -18,7 +18,7 @@ namespace Kumomori.Api.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Basket", x => x.Id);
+                    table.PrimaryKey("PK_Baskets", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,9 +35,9 @@ namespace Kumomori.Api.Data.Migrations
                 {
                     table.PrimaryKey("PK_BasketItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BasketItems_Basket_BasketId",
+                        name: "FK_BasketItems_Baskets_BasketId",
                         column: x => x.BasketId,
-                        principalTable: "Basket",
+                        principalTable: "Baskets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -65,7 +65,7 @@ namespace Kumomori.Api.Data.Migrations
                 name: "BasketItems");
 
             migrationBuilder.DropTable(
-                name: "Basket");
+                name: "Baskets");
         }
     }
 }
