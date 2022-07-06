@@ -29,13 +29,19 @@ public class BasketController : BaseApiController
     {
         var basket = await RetrieveBasket();
         if (basket is null)
-            basket = CreateNewBasket();
+            basket = CreateBasket();
 
-        // get book
-        // add item
-        // save basket
+        var book = await _context.Books.FindAsync(bookId);
+        if (book is null)
+            return NotFound();
 
-        return await Task.FromResult(StatusCode(201));
+        basket.AddItem(book, quantity);
+        var result = await _context.SaveChangesAsync();
+
+        if (result < 1)
+            return BadRequest(new ProblemDetails { Title = "Problem saving item to basket" });
+
+        return StatusCode(201);
     }
 
     [HttpDelete]
@@ -45,6 +51,23 @@ public class BasketController : BaseApiController
         // remove item or reduce quantity
         // save basket
         return Ok();
+    }
+
+    private Basket CreateBasket()
+    {
+        var buyerId = Guid.NewGuid().ToString();
+        var cookieOptions = new CookieOptions
+        {
+            IsEssential = true,
+            Expires = DateTime.Now.AddDays(30)
+        };
+
+        Response.Cookies.Append("buyerId", buyerId, cookieOptions);
+
+        var basket = new Basket { BuyerId = buyerId };
+
+        _context.Baskets.Add(basket);
+        return basket;
     }
 
     private async Task<Basket?> RetrieveBasket()
