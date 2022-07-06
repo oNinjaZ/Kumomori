@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kumomori.Api.Controller;
 
-public class BasketController : BaseApiController
+public class BasketsController : BaseApiController
 {
     private readonly StoreContext _context;
-    public BasketController(StoreContext context)
+    public BasketsController(StoreContext context)
     {
         _context = context;
     }
@@ -50,7 +50,7 @@ public class BasketController : BaseApiController
         // get basket
         // remove item or reduce quantity
         // save basket
-        return Ok();
+        return await Task.FromResult(Ok());
     }
 
     private Basket CreateBasket()
