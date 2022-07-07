@@ -31,6 +31,7 @@ var app = builder.Build();
     {
         opts.AllowAnyHeader()
             .AllowAnyMethod()
+            .AllowCredentials()
             .WithOrigins("http://localhost:3000");
     });
 
