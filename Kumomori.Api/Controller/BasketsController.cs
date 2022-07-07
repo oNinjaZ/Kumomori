@@ -1,6 +1,7 @@
 using Kumomori.Api.Data;
 using Kumomori.Api.Dtos;
 using Kumomori.Api.Entities;
+using Kumomori.Api.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +15,7 @@ public class BasketsController : BaseApiController
         _context = context;
     }
 
-    [HttpGet]
+    [HttpGet(Name = "GetBasket")]
     public async Task<ActionResult<BasketDto>> GetBasket()
     {
         var basket = await RetrieveBasket();
@@ -22,30 +23,11 @@ public class BasketsController : BaseApiController
         if (basket is null)
             return NotFound();
 
-        var basketDto = new BasketDto
-        {
-            Id = basket.Id,
-            BuyerId = basket.BuyerId,
-            Items = basket.Items.Select(i => new BasketItemDto
-            {
-                BookId = i.BookId,
-                Quantity = i.Quantity,
-                Author = i.Book.Author,
-                Title = i.Book.Title,
-                Description = i.Book.Description,
-                PageCount = i.Book.PageCount,
-                Price = i.Book.Price,
-                CoverUrl = i.Book.CoverUrl,
-                Type = i.Book.Type,
-                PublishDate = i.Book.PublishDate
-            }).ToList()
-        };
-
-        return basketDto;
+        return basket.AsDto();
     }
 
     [HttpPost]
-    public async Task<ActionResult> AddItemToBasket(int bookId, int quantity)
+    public async Task<ActionResult<BasketDto>> AddItemToBasket(int bookId, int quantity)
     {
         var basket = await RetrieveBasket();
         if (basket is null)
@@ -61,7 +43,7 @@ public class BasketsController : BaseApiController
         if (!result)
             return BadRequest(new ProblemDetails { Title = "Problem saving item to basket" });
 
-        return StatusCode(201);
+        return CreatedAtRoute("GetBasket", new { id = basket.Id }, basket.AsDto());
     }
 
     [HttpDelete]
