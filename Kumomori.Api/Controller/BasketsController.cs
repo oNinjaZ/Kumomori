@@ -1,4 +1,5 @@
 using Kumomori.Api.Data;
+using Kumomori.Api.Dtos;
 using Kumomori.Api.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,14 +15,33 @@ public class BasketsController : BaseApiController
     }
 
     [HttpGet]
-    public async Task<ActionResult<Basket>> GetBasket()
+    public async Task<ActionResult<BasketDto>> GetBasket()
     {
         var basket = await RetrieveBasket();
 
         if (basket is null)
             return NotFound();
 
-        return basket;
+        var basketDto = new BasketDto
+        {
+            Id = basket.Id,
+            BuyerId = basket.BuyerId,
+            Items = basket.Items.Select(i => new BasketItemDto
+            {
+                BookId = i.BookId,
+                Quantity = i.Quantity,
+                Author = i.Book.Author,
+                Title = i.Book.Title,
+                Description = i.Book.Description,
+                PageCount = i.Book.PageCount,
+                Price = i.Book.Price,
+                CoverUrl = i.Book.CoverUrl,
+                Type = i.Book.Type,
+                PublishDate = i.Book.PublishDate
+            }).ToList()
+        };
+
+        return basketDto;
     }
 
     [HttpPost]
@@ -36,9 +56,9 @@ public class BasketsController : BaseApiController
             return NotFound();
 
         basket.AddItem(book, quantity);
-        var result = await _context.SaveChangesAsync();
+        var result = await _context.SaveChangesAsync() > 0;
 
-        if (result < 1)
+        if (!result)
             return BadRequest(new ProblemDetails { Title = "Problem saving item to basket" });
 
         return StatusCode(201);
@@ -47,10 +67,16 @@ public class BasketsController : BaseApiController
     [HttpDelete]
     public async Task<ActionResult> RemoveBasketItem(int bookId, int quantity)
     {
-        // get basket
-        // remove item or reduce quantity
-        // save basket
-        return await Task.FromResult(Ok());
+        var basket = await RetrieveBasket();
+        if (basket is null)
+            return NotFound();
+
+        basket.RemoveItem(bookId, quantity);
+
+        var result = await _context.SaveChangesAsync() > 0;
+        if (result)
+            return Ok();
+        return BadRequest(new ProblemDetails { Title = "Problem removing item from the basket" });
     }
 
     private Basket CreateBasket()
