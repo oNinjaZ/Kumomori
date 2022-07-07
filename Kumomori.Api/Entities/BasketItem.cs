@@ -10,7 +10,7 @@ namespace Kumomori.Api.Entities
 
         // navigation properties
         public int BookId { get; set; }
-        public Book? Book { get; set; }
+        public Book Book { get; set; } = default!;
 
         public int BasketId { get; set; }
         public Basket Basket { get; set; } = default!;

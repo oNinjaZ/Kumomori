@@ -12,5 +12,4 @@ public class Book
     public string Type { get; set; } = default!;
     public int QuantityInStock { get; set; }
     public DateTime PublishDate { get; set; }
-
 }

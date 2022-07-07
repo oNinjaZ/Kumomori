@@ -31,7 +31,7 @@ public class Basket
 
         item.Quantity -= quantity;
 
-        if(item.Quantity < 1)
+        if (item.Quantity < 1)
             Items.Remove(item);
     }
 }
