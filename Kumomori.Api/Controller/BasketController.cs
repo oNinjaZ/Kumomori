@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kumomori.Api.Controller;
 
-public class BasketsController : BaseApiController
+public class BasketController : BaseApiController
 {
     private readonly StoreContext _context;
-    public BasketsController(StoreContext context)
+    public BasketController(StoreContext context)
     {
         _context = context;
     }
